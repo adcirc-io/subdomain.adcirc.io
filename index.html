@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ADCIRC Subdomain Tools</title>
+
+    <link rel="stylesheet" href="index.css">
+    <script src="lib/adcirc-lib/adcirc-lib-dl.min.js"></script>
+    <script src="lib/d3/d3.v4.min.js"></script>
+    <script src="lib/fs/FileSaver.js"></script>
+
+    <script src="src/dispatcher.js"></script>
+    <script src="src/dataset.js"></script>
+    <script src="src/ellipse_editor.js"></script>
+
+</head>
+<body>
+
+<input style="display: none;" id="fort14" type="file">
+
+<div class="header">
+
+    <div id="fort14_button" class="button">Open fort.14</div>
+    <div id="ellipse_draw_button" class="button">Draw Ellipse</div>
+    <div id="ellipse_edit_button" class="button">Edit Ellipse</div>
+    <div id="save_shapefile_button" class="button">Save Shapefile</div>
+    <div id="message"></div>
+    <div id="coordinates" class="right">Mouse Coordinates</div>
+</div>
+<div class="stage">
+    <svg id="overlay"></svg>
+    <canvas id="canvas"></canvas>
+</div>
+<script src="index.js"></script>
+
+</body>
+</html>
