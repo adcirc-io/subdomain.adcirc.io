@@ -6,8 +6,10 @@ let canvas = d3.select('#canvas'),
     button_edit_ellipse = d3.select('#ellipse_edit_button'),
     button_save_shapefile = d3.select('#save_shapefile_button'),
     file_chooser_fort_14 = d3.select('#fort14'),
+    message = d3.select('#message'),
     overlay = d3.select('#overlay'),
-    message = d3.select('#message');
+    progress = d3.select('#progress'),
+    progress_bar = d3.select('#progress-bar');
 
 
 // ADCIRC Components
@@ -37,6 +39,8 @@ ellipse_tool.on('mode', on_tool_mode);
 renderer.clear_color('#dddddd');
 button_edit_ellipse.style('display', 'none');
 button_save_shapefile.style('display', 'none');
+message.style('display', 'none');
+progress_hide();
 
 function on_ellipse_finished () {
     button_edit_ellipse.style('display', null);
@@ -54,6 +58,8 @@ function on_fort14 () {
         .on('view', on_view)
         .on('mesh_loaded', on_mesh_loaded);
 
+    progress_show();
+    progress_set(0);
     data.load_fort_14(file_chooser_fort_14.node().files[0]);
 }
 
@@ -68,11 +74,13 @@ function on_hover (event) {
 function on_mesh_loaded () {
 
     data.view('depth');
+    progress_set(0);
+    progress_hide();
 
 }
 
 function on_progress (event) {
-
+    progress_set(event.progress);
 }
 
 function on_projection (event) {
@@ -102,16 +110,19 @@ function on_tool_mode (mode) {
     switch (mode) {
 
         case 'draw':
+            message.style('display', null);
             message.text('Place points to draw ellipse. Press Esc or Enter to cancel.');
             button_draw_ellipse.style('background-color', 'lightsteelblue');
             break;
 
         case 'edit':
+            message.style('display', null);
             message.text('Drag points to edit ellipse. Press Esc or Enter to finish.');
             button_edit_ellipse.style('background-color', 'lightsteelblue');
             break;
 
         case 'sleep':
+            message.style('display', 'none');
             message.text(null);
             button_draw_ellipse.style('background-color', null);
             button_edit_ellipse.style('background-color', null);
@@ -128,4 +139,16 @@ function on_view (event) {
 
 function pick_fort14 () {
     file_chooser_fort_14.node().click();
+}
+
+function progress_hide () {
+    progress.style('display', 'none');
+}
+
+function progress_set (p) {
+    progress_bar.style('width', p + '%');
+}
+
+function progress_show () {
+    progress.style('display', null);
 }

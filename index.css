@@ -80,3 +80,20 @@ canvas {
 .button:hover {
     background-color: lightsteelblue;
 }
+
+.progress {
+
+    display: flex;
+    flex: 1 0 auto;
+    align-self: stretch;
+    border-left: 1px solid darkgray;
+    border-right: 1px solid darkgray;
+    padding: 0;
+
+}
+
+.progress-bar {
+
+    background-color: steelblue;
+
+}
