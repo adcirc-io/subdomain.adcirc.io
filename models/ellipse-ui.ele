@@ -1,0 +1,68 @@
+abstract sig Button {}
+one sig Draw, Edit extends Button {}
+
+abstract sig Mode {}
+one sig Sleeping, Drawing, Editing extends Mode {}
+
+var lone sig Ellipse {}
+
+var sig buttons in Button {}	-- buttons that are visible
+var sig state in Mode {}		-- current editing state
+
+fact draw_always_visible {
+	always Draw in buttons
+}
+
+fact init {
+	buttons = Draw
+	state = Sleeping
+	no Ellipse
+	always {
+		click_draw or
+		click_edit or
+		abort_draw or
+		finish_draw
+	}
+}
+
+pred reset {
+	no Ellipse'
+}
+
+pred click_draw {
+	reset
+	state' = Drawing
+
+	buttons' = buttons
+--	buttons' = buttons - Edit		--- This line fixes the model
+}
+
+pred click_edit {
+	Edit in buttons
+	state' = Editing
+	buttons' = buttons
+	Ellipse' = Ellipse
+}
+
+pred abort_draw {
+	state = Drawing
+	state' = Sleeping
+	buttons' = buttons
+	reset
+}
+
+pred finish_draw {
+	state = Drawing
+	state' = Sleeping
+	Edit in buttons'
+	some Ellipse'
+}
+
+assert nobugs {
+	always {
+		Edit in buttons => some Ellipse
+	}
+}
+
+check nobugs for 3
+

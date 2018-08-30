@@ -113,6 +113,8 @@ function on_tool_mode (mode) {
             message.style('display', null);
             message.text('Place points to draw ellipse. Press Esc or Enter to cancel.');
             button_draw_ellipse.style('background-color', 'lightsteelblue');
+            button_edit_ellipse.style('display', 'none');
+            button_save_shapefile.style('display', 'none');
             break;
 
         case 'edit':
